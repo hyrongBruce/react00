@@ -4,7 +4,7 @@ class PlaceHolder extends Component {
     constructor(props) {
         super(props);
         this.states = {
-            change: "hah"
+            change: 0
         };
     }
 
@@ -24,46 +24,78 @@ class PlaceHolder extends Component {
                 // callback(xmlHttp.responseText);
                 console.log(xmlHttp.responseText);
         }
-        xmlHttp.open("GET", 'https://jsonplaceholder.typicode.com/posts/1', true); // true for asynchronous 
+        xmlHttp.open("GET", 'https://jsonplaceholder.typicode.com/posts/10', true); // true for asynchronous 
         xmlHttp.send(null);
 
     }
     // changing stuff
     _changeName = (e) => {
-        console.log(this.states.change)
+        // console.log(this.states.change)
         this.setState({ change: e.target.value });
-        console.log(this.states.change)
+        // console.log(this.states.change)
     }
-
-    componentDidUpdate() {
+    _delete= (e) => {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
-            console.log(xmlHttp.status);
-            // 201 Created
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 201)
-            // callback(xmlHttp.responseText);
-            {
+            // console.log(xmlHttp.status);
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
                 console.log(xmlHttp.responseText);
-                console.log("success")
-            }
         }
-        xmlHttp.open("post", 'https://jsonplaceholder.typicode.com/posts', true); // true for asynchronous 
+        xmlHttp.open("delete", 'https://jsonplaceholder.typicode.com/posts/1', true);
+    }
 
-        // set header
+    _update = (e) => {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            // console.log(xmlHttp.status);
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                console.log(xmlHttp.responseText);
+        }
+        xmlHttp.open("put", 'https://jsonplaceholder.typicode.com/posts/1', true);
         xmlHttp.setRequestHeader("Content-type", "application/json");
-
-        // send body
         xmlHttp.send(JSON.stringify({
-            title: 'foo',
-            body: 'bar',
+            title: 'fooooooooo',
+            body: 'bbbbbbb',
             userId: 1,
         }));
+    }
+    componentDidUpdate() {
+        
+            // create
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                // 201 Created
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 201)
+                {
+                    console.log(xmlHttp.responseText);
+                }
+            }
+            xmlHttp.open("post", 'https://jsonplaceholder.typicode.com/posts', true); // true for asynchronous 
+            // set header
+            xmlHttp.setRequestHeader("Content-type", "application/json");
+            // send body
+            xmlHttp.send(JSON.stringify({
+                title: 'foo',
+                body: 'bar',
+                userId: 1,
+            }));
+        
+            // if I do it one more time?
+            // xmlHttp.open("delete", 'https://jsonplaceholder.typicode.com/posts/1', true);
+            // xmlHttp.send(null);
+
+        // if(this.states.change === 2){
+
+        // }
+        
     }
 
     render() {
         return <div>Check Console For GetStuff ; Change Input for create dummy<br />
             {/* <button onClick={this.changeState()}>update</button> */}
-            <input type="text" onChange={this._changeName} />
+            <input type="text" placeholder='create' onChange={this._changeName} /> <br/>
+            <input type="text" placeholder='delete' onChange={this._delete} /> <br/>
+            <input type="text" placeholder='update' onChange={this._update} />
             {/* <p>{this.states.change}</p> */}
         </div>;
     }
