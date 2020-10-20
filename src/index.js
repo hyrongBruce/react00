@@ -1,18 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
 import App from './App';
 import Clock from './Clock';
-import PlaceHolder from './PlaceHolder';
-import * as serviceWorker from './serviceWorker';
+// import PlaceHolder from './PlaceHolder';
+import AxiosTest from './AxiosTest';
 
+import * as serviceWorker from './serviceWorker';
+import Axios from 'axios';
+
+import {BrowserRouter} from 'react-router-dom';
+
+// Set the axios Global config
+Axios.defaults.baseURL= 'https://jsonplaceholder.typicode.com';
+Axios.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
+Axios.defaults.headers.post['Content-Type']='application/json';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
     <Clock/>
-    <PlaceHolder/>
+    
+    <BrowserRouter>
+    {/* <PlaceHolder/> */}
+    <AxiosTest/>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
